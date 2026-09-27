@@ -8,6 +8,14 @@
         "overview": "",
         "versions": [
             {
+                "checksum": "2ceea2d67eef083c004b3528ae86e4bf",
+                "changelog": "Added Support Jellyfin 12; Fixed performer images failing to download when Stash requires an API key",
+                "targetAbi": "12.0.0.0",
+                "sourceUrl": "https://github.com/trampu83/Jellyfin.Plugin.Stash/releases/download/1.2.0.4/Jellyfin.Plugin.Stash.zip",
+                "timestamp": "2026-09-27T19:08:49Z",
+                "version": "1.2.0.4"
+            },
+            {
                 "checksum": "89ea20b5e77f7cb1991567e33a4bca05",
                 "changelog": "Added Support Jellyfin 10.11; Added Support Emby 4.9; Minor Changes",
                 "targetAbi": "10.11.0.0",
