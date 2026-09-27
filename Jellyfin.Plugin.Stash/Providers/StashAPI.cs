@@ -172,7 +172,6 @@ namespace Stash.Providers
                 {
                     ProviderIds = { { Plugin.Instance.Name, actorLink.Id } },
                     Name = actorName,
-                    ImageUrl = actorLink.ImagePath,
                 };
 
                 result.AddPerson(actor);
