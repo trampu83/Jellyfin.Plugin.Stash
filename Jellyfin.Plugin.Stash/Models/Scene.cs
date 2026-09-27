@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Stash.Helpers;
 
 namespace Stash.Models
 {
@@ -16,6 +17,7 @@ namespace Stash.Models
         public string Details { get; set; }
 
         [JsonProperty(PropertyName = "date")]
+        [JsonConverter(typeof(FuzzyDateConverter))]
         public DateTime? Date { get; set; }
 
         [JsonProperty(PropertyName = "rating100")]

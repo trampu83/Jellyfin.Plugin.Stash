@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Stash.Helpers;
 
 namespace Stash.Models
 {
@@ -25,9 +26,11 @@ namespace Stash.Models
         public List<string> AliasList { get; set; }
 
         [JsonProperty(PropertyName = "birthdate")]
+        [JsonConverter(typeof(FuzzyDateConverter))]
         public DateTime? BirthDate { get; set; }
 
         [JsonProperty(PropertyName = "death_date")]
+        [JsonConverter(typeof(FuzzyDateConverter))]
         public DateTime? DeathDate { get; set; }
 
         [JsonProperty(PropertyName = "tags")]
