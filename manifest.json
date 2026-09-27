@@ -8,6 +8,14 @@
         "overview": "",
         "versions": [
             {
+                "checksum": "7b0c12b8927928119773147219af5613",
+                "changelog": "Fixed metadata and images failing for performers and scenes with partial dates",
+                "targetAbi": "12.0.0.0",
+                "sourceUrl": "https://github.com/trampu83/Jellyfin.Plugin.Stash/releases/download/1.2.0.6/Jellyfin.Plugin.Stash.zip",
+                "timestamp": "2026-09-27T20:16:10Z",
+                "version": "1.2.0.6"
+            },
+            {
                 "checksum": "d181867b54151b0630e8eea0e3920fe8",
                 "changelog": "Fixed images failing to download from an authenticated Stash when picked manually or set on performers",
                 "targetAbi": "12.0.0.0",
