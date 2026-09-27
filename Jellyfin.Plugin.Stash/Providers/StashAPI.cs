@@ -111,7 +111,7 @@ namespace Stash.Providers
                     ProviderIds = { { Plugin.Instance.Name, searchResult.Id } },
                     Name = searchResult.Title,
                     PremiereDate = searchResult.Date,
-                    ImageUrl = searchResult.Paths.Screenshot,
+                    ImageUrl = WithApiKey(searchResult.Paths.Screenshot),
                 });
             }
 
@@ -172,6 +172,7 @@ namespace Stash.Providers
                 {
                     ProviderIds = { { Plugin.Instance.Name, actorLink.Id } },
                     Name = actorName,
+                    ImageUrl = WithApiKey(actorLink.ImagePath),
                 };
 
                 result.AddPerson(actor);
@@ -205,13 +206,13 @@ namespace Stash.Providers
             result.Add(new RemoteImageInfo
             {
                 Type = ImageType.Primary,
-                Url = sceneData.Paths.Screenshot,
+                Url = WithApiKey(sceneData.Paths.Screenshot),
             });
 
             result.Add(new RemoteImageInfo
             {
                 Type = ImageType.Backdrop,
-                Url = sceneData.Paths.Screenshot,
+                Url = WithApiKey(sceneData.Paths.Screenshot),
             });
 
             if (sceneData.Studio.HasValue)
@@ -219,7 +220,7 @@ namespace Stash.Providers
                 result.Add(new RemoteImageInfo
                 {
                     Type = ImageType.Logo,
-                    Url = sceneData.Studio.Value.ImagePath,
+                    Url = WithApiKey(sceneData.Studio.Value.ImagePath),
                 });
 
                 if (sceneData.Studio.Value.ParentStudio.HasValue)
@@ -227,7 +228,7 @@ namespace Stash.Providers
                     result.Add(new RemoteImageInfo
                     {
                         Type = ImageType.Logo,
-                        Url = sceneData.Studio.Value.ParentStudio.Value.ImagePath,
+                        Url = WithApiKey(sceneData.Studio.Value.ParentStudio.Value.ImagePath),
                     });
                 }
             }
@@ -264,7 +265,7 @@ namespace Stash.Providers
                     ProviderIds = { { Plugin.Instance.Name, searchResult.Id } },
                     Name = searchResult.Name,
                     PremiereDate = searchResult.BirthDate,
-                    ImageUrl = searchResult.ImagePath,
+                    ImageUrl = WithApiKey(searchResult.ImagePath),
                 });
             }
 
@@ -334,7 +335,7 @@ namespace Stash.Providers
             result.Add(new RemoteImageInfo
             {
                 Type = ImageType.Primary,
-                Url = sceneData.ImagePath,
+                Url = WithApiKey(sceneData.ImagePath),
             });
 
             return result;
@@ -368,7 +369,7 @@ namespace Stash.Providers
                 {
                     ProviderIds = { { Plugin.Instance.Name, searchResult.Id } },
                     Name = searchResult.Name,
-                    ImageUrl = searchResult.ImagePath,
+                    ImageUrl = WithApiKey(searchResult.ImagePath),
                 });
             }
 
@@ -423,10 +424,24 @@ namespace Stash.Providers
             result.Add(new RemoteImageInfo
             {
                 Type = ImageType.Logo,
-                Url = sceneData.ImagePath,
+                Url = WithApiKey(sceneData.ImagePath),
             });
 
             return result;
+        }
+
+        // Jellyfin downloads some images with its own HttpClient (manual image pick, PersonInfo.ImageUrl),
+        // bypassing GetImageResponse, so the URL itself must carry the key.
+        private static string WithApiKey(string url)
+        {
+            var apiKey = Plugin.Instance.Configuration.StashAPIKey;
+            if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(apiKey))
+            {
+                return url;
+            }
+
+            var separator = url.Contains('?') ? '&' : '?';
+            return $"{url}{separator}apikey={Uri.EscapeDataString(apiKey)}";
         }
     }
 }
